@@ -4,6 +4,7 @@
   "description": "A image upload api server",
   "main": "index.js",
   "scripts": {
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,6 +14,12 @@
   "author": "Caoanlong",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.5.0"
+    "busboy": "^0.2.14",
+    "gm": "^1.23.1",
+    "koa": "^2.5.0",
+    "koa-logger": "^3.2.0",
+    "koa-multer": "^1.0.2",
+    "koa-router": "^7.4.0",
+    "sharp": "^0.20.2"
   }
 }
