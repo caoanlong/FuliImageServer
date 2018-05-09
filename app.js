@@ -3,6 +3,7 @@ const Router = require('koa-router')
 const multer = require('koa-multer')
 const logger = require('koa-logger')
 const sharp = require('sharp')
+const config = require('./config')
 
 const app = new Koa()
 app.use(logger())
@@ -10,11 +11,11 @@ app.use(logger())
 let storage = multer.diskStorage({
 	// 文件保存路径
 	destination: function(req, file, cb) {
-		cb(null, './public/uploads/')
+		cb(null, config.path)
 	},
 	// 修改文件名称
 	filename: function(req, file, cb) {
-		cb(null, Math.random().toString(32).substr(2) + '.' + getSuffixName(file.originalname))
+		cb(null, Math.random().toString(16).substr(2) + Date.now() + '.' + getSuffixName(file.originalname))
 	}
 })
 
@@ -36,8 +37,8 @@ function getSuffixName( fileName ) {
 router.post('/image/upload/single', upload.single('file'), async ctx => {
 	if (ctx.req.file) {
 		let filePath = ctx.req.file.path
-		sharp('public/uploads/' + ctx.req.file.filename)
-		.resize(200).toFile('public/uploads_mini/' + ctx.req.file.filename, (err, info) => {
+		sharp(config.path + ctx.req.file.filename)
+		.resize(200).toFile(config.mini_path + ctx.req.file.filename, (err, info) => {
 			err && console.log('err:' + err)
 			info && console.log('info:' + JSON.stringify(info))
 		})
@@ -53,8 +54,8 @@ router.post('/image/upload/single', upload.single('file'), async ctx => {
 router.post('/image/upload/multiple', upload.array('files', 9), async ctx => {
 	if (ctx.req.files && ctx.req.files.length > 0) {
 		ctx.req.files.forEach(item => {
-			sharp('public/uploads/' + item.filename)
-			.resize(200).toFile('public/uploads_mini/' + item.filename, (err, info) => {
+			sharp(config.path + item.filename)
+			.resize(200).toFile(config.mini_path + item.filename, (err, info) => {
 				err && console.log('err:' + err)
 				info && console.log('info:' + JSON.stringify(info))
 			})
