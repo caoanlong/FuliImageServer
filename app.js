@@ -34,6 +34,10 @@ function getSuffixName( fileName ) {
 	return nameList[nameList.length - 1]
 }
 
+router.get('/test', async ctx => {
+	ctx.body = 'fuck you!'
+})
+
 router.post('/image/upload/single', upload.single('file'), async ctx => {
 	if (ctx.req.file) {
 		let filePath = ctx.req.file.path

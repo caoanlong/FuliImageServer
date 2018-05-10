@@ -1,6 +1,6 @@
 const filePath = {
-	path: 'public/uploads/',
-	mini_path: 'public/uploads_mini/'
+	path: '/home/data/image/uploads/',
+	mini_path: '/home/data/image/uploads_mini/'
 }
 
 module.exports = filePath
