@@ -38,7 +38,7 @@ router.post('/image/upload/single', upload.single('file'), async ctx => {
 		ctx.body = {
 			code: 0,
 			msg: '成功',
-			data: ctx.req.file.path
+			data: ctx.req.file.path.split('data')[1]
 		}
 	} else {
 		ctx.body = {
@@ -60,7 +60,7 @@ router.post('/image/upload/multiple', upload.array('files', 9), async ctx => {
 		ctx.body = {
 			code: 0,
 			msg: '成功',
-			data: ctx.req.files.map(item => item.path)
+			data: ctx.req.files.map(item => item.path.split('data')[1])
 		}
 	} else {
 		ctx.body = {
