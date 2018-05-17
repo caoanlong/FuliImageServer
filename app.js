@@ -9,6 +9,13 @@ const { getSuffixName } = require('./utils')
 const app = new Koa()
 app.use(logger())
 
+app.use(async function(ctx, next) {
+	ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin)
+	ctx.set("Access-Control-Allow-Methods", "POST")
+	ctx.set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Access-Token")
+	await next()
+})
+
 let storage = multer.diskStorage({
 	// 文件保存路径
 	destination: function(req, file, cb) {
