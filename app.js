@@ -35,6 +35,10 @@ router.post('/image/upload/single', upload.single('file'), async ctx => {
 			err && console.log('err:' + err)
 			info && console.log('info:' + JSON.stringify(info))
 		})
+		.resize(600).toFile(config.middle_image_path + ctx.req.file.filename, (err, info) => {
+			err && console.log('err:' + err)
+			info && console.log('info:' + JSON.stringify(info))
+		})
 		ctx.body = {
 			code: 0,
 			msg: '成功',
@@ -53,6 +57,10 @@ router.post('/image/upload/multiple', upload.array('files', 9), async ctx => {
 		ctx.req.files.forEach(item => {
 			sharp(config.image_path + item.filename)
 			.resize(200).toFile(config.mini_image_path + item.filename, (err, info) => {
+				err && console.log('err:' + err)
+				info && console.log('info:' + JSON.stringify(info))
+			})
+			.resize(600).toFile(config.middle_image_path + item.filename, (err, info) => {
 				err && console.log('err:' + err)
 				info && console.log('info:' + JSON.stringify(info))
 			})
